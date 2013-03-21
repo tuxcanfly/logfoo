@@ -138,6 +138,10 @@ LOGGING = {
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
+        },
+        'sql_inserts': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': lambda x: 'INSERT' in x.msg
         }
     },
     'handlers': {
@@ -161,6 +165,7 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True,
+            'filters': ['sql_inserts'],
         },
     }
 }
